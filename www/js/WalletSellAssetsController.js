@@ -5,11 +5,20 @@ function WalletSellAssetsController($modal, $scope, $http, $q, userService, wall
 
   $scope.currencySaleList = $scope.currencyList.filter(function(currency){
     if (currency.symbol == $scope.activeCurrencyPair[1] )
-      $scope.$parent.selectedCoin = currency;
+      $scope.$parent.$parent.selectedCoin = currency;
     return currency.symbol == $scope.activeCurrencyPair[1];
   });
 
-  
+  if( $scope.currencySaleList.length == 0 ) {
+    var noCurrency={
+        symbol: 'No DeX-tradable coins in wallet!',
+        name: 'No DeX-tradable coins in wallet!',
+        addresses: [] 
+    }
+    $scope.currencySaleList.push(noCurrency);
+    $scope.$parent.$parent.selectedCoin=noCurrency;
+    $scope.hideForm=true
+  }
   // [ Sale Form Helpers ]
 
   function getUnsignedSaleTransaction(sellerAddress, pubKey, saleAmount, salePrice, buyersFee, fee, saleBlocks, currency) {
@@ -209,7 +218,8 @@ function WalletSellAssetsController($modal, $scope, $http, $q, userService, wall
               currency: coin,
               saleAmountMillis: saleAmountMillis,
               selectedCoin: $scope.selectedCoin,
-              buyersFeeMillis: buyersFeeMillis
+              buyersFeeMillis: buyersFeeMillis,
+              saleBlocks: saleBlocks
             };
           },
           prepareSaleTransaction: function() {

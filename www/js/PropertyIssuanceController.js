@@ -54,15 +54,15 @@ function PropertyIssuanceController($scope, $http,$modal, userService, walletTra
         try {
           var bytes = Bitcoin.Util.hexToBytes(unsignedTransaction);
           var transaction = Bitcoin.Transaction.deserialize(bytes);
-          /*var script = parseScript(successData.sourceScript);
+          var script = parseScript(successData.sourceScript);
 
           transaction.ins.forEach(function(input) {
             input.script = script;
-          });*/
+          });
 
           //DEBUG console.log('before',transaction, Bitcoin.Util.bytesToHex(transaction.serialize()));
           var signedSuccess = transaction.signWithKey(privKey);
-
+          
           var finalTransaction = Bitcoin.Util.bytesToHex(transaction.serialize());
 
           //Showing the user the transaction hash doesn't work right now

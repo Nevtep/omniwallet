@@ -189,3 +189,20 @@ form.form-search:before {
 .icons a.facebook { background: url(/assets/img/social-icons/facebook.png) left top no-repeat; }
 
 .icons a:hover { background-position: left -34px; }
+
+/* Customized modal */
+.wallet-create-modal {
+    background-color: #044F92;
+}
+.wallet-create-modal h3 {
+    color: white;
+    font-weight: bold;
+}
+
+.login-modal {
+    background-color: #00A551;
+}
+.login-modal h3 {
+    color: white;
+    font-weight: bold;
+}

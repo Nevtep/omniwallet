@@ -147,6 +147,8 @@ function RevisionController($scope, $http, $modal, userService) {
 
 function NavigationController($scope, $http, $modal, userService) {
 
+  $scope.windowHeight = $(window).height();
+
   $scope.getNavData = function() {
     console.log('init 0');
   };

@@ -49,7 +49,23 @@ body {
   margin-left: 150px;
 }
 .middle {
-  margin-top: 125px;
+  margin-bottom: -98px;
+  margin-top: 98px;
+}
+.main-tile {
+  background-color: #2d508f;
+  color: white;
+  padding-bottom: 30px;
+  padding-top: 30px;
+  text-align: justify;
+}
+.main-tile .controls {
+  text-align: center;
+}
+.main-tile .btn {
+  border-radius: 0;
+  color: green;
+  font-weight: bold;
 }
 .arc path {
   stroke: #fff;

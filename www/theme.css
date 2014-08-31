@@ -63,6 +63,11 @@ body {
 .main-tile .controls {
   text-align: center;
 }
+.main-tile .inner {
+  background: url(assets/img/main-tile-pattern.png) no-repeat scroll right bottom #2d508f;
+  margin: 0 -15px;
+  padding: 0 15px 120px;
+}
 .main-tile .btn {
   border-radius: 0;
   color: green;

@@ -7,7 +7,7 @@ body {
   margin-bottom: 60px;
 }
 #footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
@@ -55,6 +55,7 @@ body {
 .main-tile {
   background-color: #2d508f;
   color: white;
+  min-height: 560px;
   padding-bottom: 30px;
   padding-top: 30px;
   text-align: justify;
@@ -66,6 +67,40 @@ body {
   border-radius: 0;
   color: green;
   font-weight: bold;
+}
+.coin-icon {
+  border-radius: 0;
+  height: 110px;
+  margin: 15px;
+  opacity: 0.2;
+  width: 110px;
+}
+.coin-icon-1 {
+  background: url(assets/img/coins-icons/1.png);
+}
+.coin-icon-2 {
+  background: url(assets/img/coins-icons/2.png);
+}
+.coin-icon-3 {
+  background: url(assets/img/coins-icons/3.png);
+}
+.coin-icon-4 {
+  background: url(assets/img/coins-icons/4.png);
+}
+.coin-icon-5 {
+  background: url(assets/img/coins-icons/5.png);
+}
+.coin-icon-6 {
+  background: url(assets/img/coins-icons/6.png);
+}
+.coin-icon-7 {
+  background: url(assets/img/coins-icons/7.png);
+}
+.coin-icon-8 {
+  background: url(assets/img/coins-icons/8.png);
+}
+.coin-icon-9 {
+  background: url(assets/img/coins-icons/9.png);
 }
 .arc path {
   stroke: #fff;

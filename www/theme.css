@@ -53,7 +53,7 @@ body {
   margin-top: 98px;
 }
 .main-tile {
-  background-color: #2d508f;
+  background: url(assets/img/main-tile-background.png) no-repeat scroll right bottom #2d508f;
   color: white;
   min-height: 560px;
   padding-bottom: 30px;

@@ -68,10 +68,28 @@ body {
   margin: 0 -15px;
   padding: 0 15px 120px;
 }
-.main-tile .btn {
-  border-radius: 0;
-  color: green;
+.main-tile h1 {
+  font-family: 'droid sans';
+  font-size: 38px;
   font-weight: bold;
+}
+.main-tile p {
+  color: #4bffec;
+  font-family: 'pt sans';
+  font-size: 16px;
+}
+.main-tile .btn {
+  background-color: #4bffec;
+  border-radius: 0;
+  color: #349760;
+  font-family: 'slab bold';
+  font-size: 24px;
+  font-weight: bold;
+}
+.main-tile .log-in {
+  color: #d4d4d4;
+  font-family: 'droid sans';
+  font-size: 16px;
 }
 .coin-icon {
   border-radius: 0;

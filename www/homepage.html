@@ -1,7 +1,13 @@
 <row>
   <div class="center-block col-xs-12" ng-controller="NavigationController">
-    <div class="col-md-2">
+    <div class="col-md-2 left-side">
+      <p>
+        <button class="btn">Active Crowdsales</button>
+      </p>
       <button class="btn coin-icon coin-icon-{{i}}" ng-repeat="i in [1,2,3,4]"></button>
+      <p>
+        <button class="btn next">See active crowdsales</button>
+      </p>
     </div>
     <div class="col-md-5 main-tile" style="height: {{windowHeight - 198}}px">
       <div class="inner">
@@ -17,8 +23,14 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5">
+    <div class="col-md-5 right-side">
+      <p>
+        <button class="btn">Popular Assets</button>
+      </p>
       <button class="btn coin-icon coin-icon-{{i % 5 + 5}}" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12]"></button>
+      <p>
+        <button class="btn next">Explore for assets</button>
+      </p>
     </div>
   </div>
 </row>

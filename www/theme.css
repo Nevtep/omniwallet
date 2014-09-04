@@ -93,12 +93,36 @@ body {
   font-family: 'droid sans';
   font-size: 16px;
 }
+.left-side, .right-side {
+  text-align: center;
+}
+.left-side .btn, .right-side .btn {
+  background-color: white;
+  color: #eff1f5;
+  font-family: 'pt sans';
+  font-size: 16px;
+  font-weight: bold;
+}
+.left-side .btn.next, .right-side .btn.next {
+  color: #f0f4fa;
+}
+.left-side .btn:hover, .right-side .btn:hover {
+  color: #535353;
+}
 .coin-icon {
   border-radius: 0;
   height: 110px;
   margin: 15px;
   opacity: 0.2;
   width: 110px;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  -moz-transition: opacity 0.2s ease-in-out;
+  -ms-transition: opacity 0.2s ease-in-out;
+  -o-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+}
+.coin-icon:hover {
+  opacity: 1;
 }
 .coin-icon-1 {
   background: url(assets/img/coins-icons/1.png);

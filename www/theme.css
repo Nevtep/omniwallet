@@ -67,6 +67,8 @@ body {
   background: url(assets/img/main-tile-pattern.png) no-repeat scroll right bottom #2d508f;
   margin: 0 -15px;
   padding: 0 15px 120px;
+  position: fixed;
+  width: 462px;
 }
 .main-tile h1 {
   font-family: 'droid sans';

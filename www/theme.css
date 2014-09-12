@@ -56,21 +56,21 @@ body {
   margin-top: 98px;
 }
 .main-tile {
-  background: url(assets/img/main-tile-background.png) no-repeat scroll right bottom #2d508f;
   color: white;
   min-height: 560px;
-  padding-bottom: 30px;
-  padding-top: 30px;
   text-align: justify;
+  width: 607px;
 }
 .main-tile .controls {
   text-align: center;
 }
 .main-tile .inner {
-  background: url(assets/img/main-tile-pattern.png) no-repeat scroll right bottom #2d508f;
+  /* background: url(assets/img/main-tile-pattern.png) no-repeat scroll right bottom #2d508f; */
+  background: url(assets/img/main-tile-background.png) no-repeat scroll right bottom #2d508f;
   margin: 0 -15px;
-  padding: 0 15px 120px;
+  padding: 30px 34px 120px;
   position: fixed;
+  width: 607px;
 }
 .main-tile h1 {
   font-family: 'droid sans';
@@ -78,22 +78,33 @@ body {
   font-weight: bold;
 }
 .main-tile p {
-  color: #4bffec;
+  color: #d4d4d4;
   font-family: 'pt sans';
   font-size: 16px;
+  margin: 15px 0;
+}
+.main-tile p.main-text {
+  line-height: 26px;
+  margin: 24px -34px 46px;
+  padding-left: 34px;
+  padding-right: 30px;
 }
 .main-tile .btn {
-  background-color: #4bffec;
+  background-color: #ff9900;
   border-radius: 0;
-  color: #349760;
-  font-family: 'slab bold';
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.75);
+  color: white;
+  font-family: 'roboto slab';
   font-size: 24px;
   font-weight: bold;
+  padding: 12px 48px 12px 42px;
 }
 .main-tile .log-in {
-  color: #d4d4d4;
+  color: #33ccff;
   font-family: 'droid sans';
   font-size: 16px;
+  font-weight: bold;
+  margin-left: 10px;
 }
 .left-side, .right-side {
   padding-left: 0;
@@ -105,6 +116,7 @@ body {
 }
 .left-side .btn, .right-side .btn {
   background-color: white;
+  border-radius: 0;
   color: #eff1f5;
   font-family: 'pt sans';
   font-size: 16px;
@@ -113,8 +125,9 @@ body {
 .left-side .btn.next, .right-side .btn.next {
   color: #f0f4fa;
 }
-.left-side .btn:hover, .right-side .btn:hover {
-  color: #535353;
+.left-side .btn.action-btn:hover, .right-side .btn.action-btn:hover {
+  background-color: #535353;
+  color: white;
 }
 .coin-icon {
   border-radius: 0;

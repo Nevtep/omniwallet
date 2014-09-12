@@ -2,18 +2,18 @@
   <div class="center-block col-xs-12" ng-controller="NavigationController">
     <div class="col-md-2 left-side">
       <p>
-        <button class="btn">Active Crowdsales</button>
+        <button class="btn  action-btn">Active Crowdsales</button>
       </p>
       <button class="btn coin-icon coin-icon-{{key + 1}}" title="{{value}}" ng-repeat="(key, value) in ['Maidsafecoin','klippit','Unknown','Unknown2']"></button>
       <p>
-        <button class="btn next">See active crowdsales</button>
+        <button class="btn action-btn next">See active crowdsales</button>
       </p>
     </div>
-    <div class="col-md-5 main-tile" style="height: {{windowHeight - 198}}px">
-      <div class="inner" style="width: {{windowWidth * 5 / 12 - 32}}px;">
+    <div class="col-md-5 main-tile">
+      <div class="inner" style="height: {{windowHeight - 198}}px">
         <h1>The next generation wallet</h1>
-        <p>
-          Lorem ipsum dolor sit amet, an vel dicunt molestie. Ne aliquid ocurreret sententiae usu. Ius te quis persius. Te per agam saperet scriptorem, at cum meliore volutpat. Duo an insolens intellegebat concludaturque. Simul debitis sea an, quo ea facete meliore repudiare. Modo patrioque definitiones et sed, no erant euripidis deseruisse ius, est omittam ancillae adipisci ea.
+        <p class="main-text">
+          Manage all of your digital assets from a secure, easy to use yet powerful wallet. Decentralized exchange, crowdsales and various tokens available. Access to your funds is solely yours, decryption is on your machine and passwords are never being sent to the server. Being build as an open source project, Omni is a transparent service. Welcome to the future of cryptocurrency. We hope you'll Enjoy Omni. Take part on this little stuff we do. <b>Registration is free and anonymous.</b>
         </p>
         <div class="controls">
           <button class="btn" ng-click="openCreateModal()">Create your wallet</button>
@@ -23,13 +23,13 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5 right-side" style="width: {{windowWidth * 5 / 12 + 32}}px;">
+    <div class="col-md-5 right-side" style="width: {{windowWidth - 840}}px;">
       <p>
-        <button class="btn">Popular Assets</button>
+        <button class="btn action-btn">Popular Assets</button>
       </p>
       <button class="btn coin-icon coin-icon-{{(key + 1) % 5 + 5}}" title="{{value}}" ng-repeat="(key, value) in ['Litecoin','Unknown','Mastercoin','Peercoin','Bitcoin','Litecoin2','Unknown2','Mastercoin2','Peercoin2','Bitcoin2','Litecoin3','Unknown3']"></button>
       <p>
-        <button class="btn next">Explore for assets</button>
+        <button class="btn action-btn next">Explore for assets</button>
       </p>
     </div>
   </div>

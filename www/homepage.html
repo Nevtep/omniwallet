@@ -1,11 +1,11 @@
 <row>
   <div class="center-block col-xs-12" ng-controller="NavigationController">
     <div class="col-md-2 left-side">
-      <p>
+      <p class="margin top">
         <button class="btn  action-btn">Active Crowdsales</button>
       </p>
-      <button class="btn coin-icon coin-icon-{{key + 1}}" title="{{value}}" ng-repeat="(key, value) in ['Maidsafecoin','klippit','Unknown','Unknown2']"></button>
-      <p>
+      <button class="btn coin-icon coin-icon-{{key + 1}}" title="{{value}}" ng-repeat="(key, value) in ['Maidsafecoin','klippit','Unknown','Unknown2','Maidsafecoin2','klippit2','Unknown3','Unknown4','Maidsafecoin3','klippit3','Unknown5','Unknown6']"></button>
+      <p class="margin bottom">
         <button class="btn action-btn next">See active crowdsales</button>
       </p>
     </div>
@@ -23,9 +23,9 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5 right-side" style="width: {{windowWidth - 850}}px;">
-      <p class="margin top" style="width: {{windowWidth - 850}}px;">
-        <button class="btn action-btn">Popular Assets</button>
+    <div class="col-md-5 right-side" style="width: {{windowWidth - 900}}px;">
+      <p class="margin top" style="width: {{windowWidth - 900}}px;">
+        <button class="btn action-btn">Popular Tokens</button>
       </p>
       <button class="btn coin-icon coin-icon-{{(key + 1) % 5 + 5}}" title="{{value}}" ng-repeat="(key, value) in ['Litecoin','Unknown','Mastercoin','Peercoin','Bitcoin','Litecoin2','Unknown2','Mastercoin2','Peercoin2','Bitcoin2','Litecoin3','Unknown3','Mastercoin3','Peercoin3','Bitcoin3','Litecoin4','Unknown4','Mastercoin4','Peercoin4','Bitcoin4','Litecoin5','Unknown5','Mastercoin5','Peercoin5','Bitcoin5','Litecoin6','Unknown6','Mastercoin6','Peercoin6','Bitcoin6']"></button>
       <p class="margin bottom" style="width: {{windowWidth - 850}}px;">

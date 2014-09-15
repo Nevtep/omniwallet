@@ -112,26 +112,27 @@ body {
   text-align: center;
 }
 .left-side {
-  max-width: 150px;
+  padding-top: 34px;
+  max-width: 181px;
 }
 .left-side .btn, .right-side .btn {
   background-color: white;
   border-radius: 0;
   color: #eff1f5;
-  font-family: 'pt sans';
+  font-family: 'droid sans';
   font-size: 16px;
   font-weight: bold;
 }
 .right-side {
   padding-top: 34px;
 }
-.right-side .margin {
+.margin {
   min-height: 36px;
 }
-.right-side .margin.top{
+.margin.top{
   margin-top: -34px !important;
 }
-.right-side .margin.top, .right-side .margin.bottom {
+.margin.top, .margin.bottom {
   background: white;
   margin: 0;
   opacity: 1;
@@ -139,15 +140,18 @@ body {
   text-align: center;
   z-index: 1;
 }
-.right-side .margin.bottom {
+.margin.bottom {
   bottom: 100px;
 }
 .left-side .btn.next, .right-side .btn.next {
   color: #f0f4fa;
 }
-.left-side .btn.action-btn:hover, .right-side .btn.action-btn:hover {
+.left-side:hover .top .btn.action-btn, .right-side:hover .top .btn.action-btn {
   background-color: #535353;
   color: white;
+}
+.left-side:hover .bottom .btn.action-btn, .right-side:hover .bottom .btn.action-btn {
+  color: #428ac9;
 }
 .coin-icon {
   border-radius: 0;

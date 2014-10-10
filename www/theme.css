@@ -350,3 +350,26 @@ form.form-search:before {
     color: white;
     font-weight: bold;
 }
+
+/* Customized popover */
+.center-block .popover {
+    background: url(/assets/img/opens-in.png) right 7px top 12px no-repeat #F2F2F2;
+    border: none;
+    border-bottom: 2px solid #dfdfdf;
+    border-radius: 0;
+    box-shadow: none;
+    color: #535353;
+    font-family: 'droid sans';
+    font-size: 18px;
+    font-weight: bold;
+}
+.center-block .popover.bottom .arrow {
+    border-bottom-color: transparent;
+    margin-left: -16px;
+}
+.center-block .popover.bottom .arrow:after {
+    border-bottom-color: #F2F2F2;
+}
+.center-block .popover-content {
+    padding: 9px 42px 9px 14px;
+}

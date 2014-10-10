@@ -5,7 +5,8 @@ var app = angular.module('omniwallet', [
   'ui.bootstrap',
   'ui.bootstrap.modal',
   'ngNumeraljs',
-  'vr.filters.passwordStrength'
+  'vr.filters.passwordStrength',
+  'ngIdle'
 ], function($routeProvider, $locationProvider, $httpProvider) {
 
   if (!$httpProvider.defaults.headers.get)
@@ -27,7 +28,8 @@ var app = angular.module('omniwallet', [
           view = '/partials/wallet_assets_' + route.page + '.html';
         else
           view = '/partials/explorer_assets.html';
-        
+
+        ga('send', 'event', 'button', 'click', route.page);
         return view;
       }
     }).otherwise({
@@ -37,7 +39,7 @@ var app = angular.module('omniwallet', [
   $routeProvider.when('/wallet/:page?', {
       templateUrl: function(route) {
         //new views added here
-        var availableViews = ['overview', 'addresses', 'trade', 'history', 'send', 'pending'];
+        var availableViews = ['overview', 'addresses', 'trade', 'history', 'send', 'myoffers'];
 
         var viewFound = availableViews.indexOf(route.page);
         if (viewFound == -1)
@@ -45,6 +47,8 @@ var app = angular.module('omniwallet', [
 
         var view = '/partials/wallet_' + route.page + '.html';
         //DEBUG console.log(view, route.page, view == '/wallet_addresses.html')
+
+        ga('send', 'event', 'button', 'click', route.page);
         return view
       }
     }).otherwise({
@@ -61,6 +65,8 @@ var app = angular.module('omniwallet', [
 
         var view = '/partials/explorer_' + route.page + '.html';
         //DEBUG console.log(view, route.page, view == '/wallet_addresses.html')
+
+        ga('send', 'event', 'button', 'click', route.page);
         return view
       }
     }).otherwise({
@@ -77,6 +83,8 @@ var app = angular.module('omniwallet', [
 
         var view = '/partials/about_' + route.page + '.html';
         //DEBUG console.log(view, route.page, view == '/wallet_addresses.html')
+
+        ga('send', 'event', 'button', 'click', route.page);
         return view
       }
     }).when('/', {
@@ -85,6 +93,9 @@ var app = angular.module('omniwallet', [
     }).when('/login/:uuid', {
       template: '<div ng-controller="HiddenLoginController" ng-init="open()"></div>',
       controller: HiddenLoginController
+    }).when('/loginfs/:uuid', {
+      template: '<div ng-controller="FailedSaveLoginController" ng-init="open()"></div>',
+      controller: FailedSaveLoginController
     }).when('/import', {
       templateUrl: '/partials/wallet_import.html',
     }).when('/status', {
@@ -97,8 +108,12 @@ var app = angular.module('omniwallet', [
   $locationProvider.html5Mode(true).hashPrefix('!');
 });
 
-
-app.config(function() {}).run(function(userService, $location) {
+app.config(function($idleProvider, $keepaliveProvider) {
+  $idleProvider.idleDuration(config.idleDuration);
+  $idleProvider.warningDuration(config.idleWarningDuration);
+  // $keepaliveProvider.interval(2);
+})
+.run(function(userService, $location) {
   //Whitelist pages
   whitelisted = ['login', 'about', 'status', 'explorer'];
 
@@ -147,4 +162,58 @@ function TransformRequest(data) {
 
   return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
 }
-
+app.directive('fixedHeader', ['$timeout', function ($timeout) {
+    return {
+        restrict: 'A',
+        scope: {
+            tableHeight: '@'
+        },
+        link: function ($scope, $elem, $attrs, $ctrl) {
+            // wait for content to load into table and the tbody to be visible
+            $scope.$watch(function () { return $elem.find("tbody").is(':visible') },
+                function (newValue, oldValue) {
+                    if (newValue === true) {
+                        // wrap in $timeout to give table a chance to finish rendering
+                        $timeout(function () {
+                            // reset display styles so column widths are correct when measured below
+                            $elem.find('thead, tbody').css('display', '');
+                            // set widths of columns
+                            $elem.find('th').each(function (i, thElem) {
+                                thElem = $(thElem);
+ 
+                                var columnWidth = thElem.width();
+                                thElem.width(columnWidth);
+                            });
+                            $elem.find('td').each(function (j, tdElem) {
+                                tdElem = $(tdElem);
+ 
+                                var columnWidth = tdElem.width();
+                                tdElem.width(columnWidth);
+                            });
+ 
+                            // set css styles on thead and tbody
+                            $elem.find('thead').css({
+                                'display': 'block',
+                            });
+ 
+                            $elem.find('tbody').css({
+                                'display': 'block',
+                                'height': $scope.tableHeight || '350px',
+                                'overflow': 'auto',
+                            });
+ 
+                            var scrollBarWidth = $elem.find('thead').width() - $elem.find('tbody')[0].clientWidth;
+                            if (scrollBarWidth > 0) {
+                                $elem.find('tbody').each(function (i, elem) {
+                                    $(elem).width($(elem).width() + scrollBarWidth);
+                                });
+                                $elem.find('thead').each(function (j, elem) {
+                                    $(elem).width($(elem).width() - scrollBarWidth);
+                                });
+                            }
+                        });
+                    }
+                });
+        }
+    }
+}]);

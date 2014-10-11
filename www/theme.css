@@ -118,7 +118,8 @@ body {
   text-align: center;
 }
 .left-side {
-  max-width: 150px;
+  max-width: 181px;
+  padding-top: 34px;
 }
 .left-side .btn, .right-side .btn {
   background-color: white;
@@ -131,27 +132,30 @@ body {
 .right-side {
   padding-top: 34px;
 }
-.right-side .margin {
-  min-height: 36px;
-}
-.right-side .margin.top{
-  margin-top: -34px !important;
-}
-.right-side .margin.top, .right-side .margin.bottom {
+.left-side .margin, .right-side .margin {
   background: white;
   margin: 0;
+  min-height: 36px;
+  min-width: 181px;
   opacity: 1;
   position: fixed;
   text-align: center;
   z-index: 1;
 }
-.right-side .margin.bottom {
+.left-side .margin.top, .right-side .margin.top{
+  margin-bottom: 0;
+  margin-top: -34px !important;
+}
+.left-side .margin.bottom, .right-side .margin.bottom {
   bottom: 100px;
 }
 .left-side .btn.next, .right-side .btn.next {
   color: #f0f4fa;
 }
-.left-side .btn.action-btn:hover, .right-side .btn.action-btn:hover {
+.left-side:hover .btn.next, .right-side:hover .btn.next {
+  color: #428ac9
+}
+.left-side:hover .btn.action-btn, .right-side:hover .btn.action-btn {
   background-color: #535353;
   color: white;
 }
@@ -448,7 +452,6 @@ form.form-search:before {
 }
 .center-block .popover.bottom .arrow {
     border-bottom-color: transparent;
-    margin-left: -16px;
 }
 .center-block .popover.bottom .arrow:after {
     border-bottom-color: #F2F2F2;

@@ -245,7 +245,21 @@ function RevisionController($scope, $http, $modal, userService) {
   };
 }
 
-function NavigationController($scope, $http, $modal, userService) {
+function NavigationController($scope, $http, $window, $modal, userService) {
+
+  $scope.$watch(function(){
+    return $window.innerWidth;
+  }, function(value) {
+    $scope.windowWidth = $window.innerWidth;
+  }, true);
+  $scope.$watch(function(){
+    return $window.innerHeight;
+  }, function(value) {
+    $scope.windowHeight = $window.innerHeight;
+  }, true);
+  angular.element($window).bind('resize', function () {
+    $scope.$apply();
+  });
 
   $scope.getNavData = function() {
     console.log('init 0');

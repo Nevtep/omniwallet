@@ -1,12 +1,16 @@
 angular.module("omniControllers")
-	.controller("AssetsIssuanceController",["$scope", "PropertyManager", "Transaction", "ADDRESS_EXPLORER_URL", "SATOSHI_UNIT",
-		function AssetsIssuanceController($scope, PropertyManager, Transaction, ADDRESS_EXPLORER_URL, SATOSHI_UNIT){
+	.controller("AssetsIssuanceController",["$scope", "PropertyManager", "Transaction", "ADDRESS_EXPLORER_URL", "SATOSHI_UNIT", "TransactionGenerator",
+		function AssetsIssuanceController($scope, PropertyManager, Transaction, ADDRESS_EXPLORER_URL, SATOSHI_UNIT, TransactionGenerator){
 		  $scope.tokenStep = $scope.tokenMin =  0.00000001;
 		  $scope.tokenMax = "92233720368.54775807";
 		  $scope.categories = [];
 		  $scope.subcategories = [];
 		  $scope.issuerData = {};
 		  $scope.propertyDetails = {propertyType : 2, propertyCategory : ''};
+		  
+		  TransactionGenerator.getEstimatedFee().then(function(result){
+      		$scope.issuerData.minerFees = result.data.estimated_fee;
+      	  })
 		  
 		  $scope.setEcosystem = function(ecosystem){
 		  	$scope.ecosystem=ecosystem;

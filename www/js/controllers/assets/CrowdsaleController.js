@@ -1,6 +1,6 @@
 angular.module("omniControllers")
-	.controller("AssetsCrowdsaleController",["$scope", "PropertyManager", "$timeout", "Transaction", "SATOSHI_UNIT", "ADDRESS_EXPLORER_URL", "$filter",
-		function AssetsCrowdsaleController($scope, PropertyManager, $timeout, Transaction, SATOSHI_UNIT, ADDRESS_EXPLORER_URL, $filter){
+	.controller("AssetsCrowdsaleController",["$scope", "PropertyManager", "$timeout", "Transaction", "SATOSHI_UNIT", "ADDRESS_EXPLORER_URL", "$filter", "TransactionGenerator",
+		function AssetsCrowdsaleController($scope, PropertyManager, $timeout, Transaction, SATOSHI_UNIT, ADDRESS_EXPLORER_URL, $filter, TransactionGenerator){
 		  $scope.tokenStep = $scope.tokenMin =  0.00000001;
 		  $scope.tokenMax = "92233720368.54775807";
 		  $scope.categories = [];
@@ -8,6 +8,10 @@ angular.module("omniControllers")
 		  $scope.availableTokens = [];
 		  $scope.issuerData = {};
 		  $scope.propertyDetails = {propertyType : 2, propertyCategory : ''};
+
+		  TransactionGenerator.getEstimatedFee().then(function(result){
+      		$scope.issuerData.minerFees = result.data.estimated_fee;
+      	  })
 		  
 		  var mastercoin, testMastercoin, bitcoin;
 		  $scope.setEcosystem = function(ecosystem){

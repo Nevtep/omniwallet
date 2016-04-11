@@ -1,10 +1,13 @@
 angular.module("omniControllers")
-	.controller("CrowdsaleParticipationController", ["$scope", "SATOSHI_UNIT", "$route", "PropertyManager", "Transaction","$filter",
-	  function CrowdsaleParticipationController($scope, SATOSHI_UNIT, $route, PropertyManager, Transaction, $filter){
+	.controller("CrowdsaleParticipationController", ["$scope", "SATOSHI_UNIT", "$route", "PropertyManager", "Transaction","$filter", "TransactionGenerator",
+	  function CrowdsaleParticipationController($scope, SATOSHI_UNIT, $route, PropertyManager, Transaction, $filter, TransactionGenerator){
 		$scope.propertyId = $route.current.params.propertyId;
 		$scope.property = {};
 		$scope.estimatedAmount = 0;
 
+		TransactionGenerator.getEstimatedFee().then(function(result){
+      		$scope.minerFees = result.data.estimated_fee;
+      	})
 		// Load and initialize the form
 		PropertyManager.getProperty($scope.propertyId).then(function(result){
 		    $scope.property = result.data;

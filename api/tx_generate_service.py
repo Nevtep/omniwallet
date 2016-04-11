@@ -27,7 +27,7 @@ exodus_address=mainnet_exodus_address
 @app.route('/fee')
 def estimate_fee():
     fee = estimateFee(confirm_target)['result']
-    return jsonify({ 'status': 200, 'estimatedfee': fee });
+    return jsonify({ 'status': 200, 'estimated_fee': fee });
 
 @app.route('/<int:tx_type>', methods=['POST'])
 def generate_tx(tx_type):

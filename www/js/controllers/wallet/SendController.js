@@ -10,7 +10,7 @@ angular.module("omniControllers")
       	$scope.userCurrency = $scope.account.getSetting("usercurrency");
 
       	TransactionGenerator.getEstimatedFee().then(function(result){
-      		$scope.minersFee = result.estimated_fee;
+      		$scope.minersFee = result.data.estimated_fee;
       	})
 
       	$scope.setAsset = function(asset){

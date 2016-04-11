@@ -32,7 +32,7 @@ def generate_tx(tx_type):
     if tx_type not in supported_transactions:
         return jsonify({ 'status': 400, 'data': 'Unsupported transaction type '+str(tx_type) })
     
-    expected_fields=['transaction_version', 'transaction_from','pubkey','fee']
+    expected_fields=['transaction_version', 'transaction_from','pubkey']
 
     print "Form ",request.form
 
@@ -71,13 +71,13 @@ def generate_tx(tx_type):
     except NameError, e:
       print e
       pubkey = request.form['pubkey']
-
+    fee = estimateFee(6)['result']
     txdata = prepare_txdata(tx_type, request.form)
     if tx_type in [50,51,54]:
         try:
             txbytes = prepare_txbytes(txdata)
             packets = construct_packets( txbytes[0], txbytes[1], request.form['transaction_from'] )
-            unsignedhex = build_transaction( request.form['fee'], pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'])
+            unsignedhex = build_transaction( fee, pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'])
             #DEBUG print txbytes, packets, unsignedhex
             return jsonify({ 'status': 200, 'unsignedhex': unsignedhex[0] , 'sourceScript': unsignedhex[1] });
         except Exception as e:
@@ -108,7 +108,7 @@ def generate_tx(tx_type):
         try:
             tx0bytes = prepare_txbytes(txdata)
             packets = construct_packets( tx0bytes[0], tx0bytes[1], request.form['transaction_from'])
-            unsignedhex= build_transaction( request.form['fee'], pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'], request.form['transaction_to'])
+            unsignedhex= build_transaction( fee, pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'], request.form['transaction_to'])
             #DEBUG print tx0bytes, packets, unsignedhex
             return jsonify({ 'status': 200, 'unsignedhex': unsignedhex[0] , 'sourceScript': unsignedhex[1] });
         except Exception as e:
@@ -119,9 +119,9 @@ def generate_tx(tx_type):
             txbytes = prepare_txbytes(txdata)
             packets = construct_packets( txbytes[0], txbytes[1], request.form['transaction_from'])
             if tx_type == 55 and 'transaction_to' in request.form:
-              unsignedhex= build_transaction( request.form['fee'], pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'], request.form['transaction_to'])
+              unsignedhex= build_transaction( fee, pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'], request.form['transaction_to'])
             else:
-              unsignedhex= build_transaction( request.form['fee'], pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'])
+              unsignedhex= build_transaction( fee, pubkey, packets[0], packets[1], packets[2], request.form['transaction_from'])
 
             #DEBUG print tx0bytes, packets, unsignedhex
             return jsonify({ 'status': 200, 'unsignedhex': unsignedhex[0] , 'sourceScript': unsignedhex[1] });
@@ -476,8 +476,8 @@ def construct_packets(byte_stream, total_bytes, from_address):
     #DEBUG print final_packets 
     return [final_packets,total_packets,total_outs]
     
-def build_transaction(miner_fee_satoshis, pubkey,final_packets, total_packets, total_outs, from_address, to_address=None):
-    print "build_transaction", miner_fee_satoshis, pubkey,final_packets, total_packets, total_outs, from_address, to_address
+def build_transaction(miner_fee_btc, pubkey,final_packets, total_packets, total_outs, from_address, to_address=None):
+    print "build_transaction", miner_fee_btc, pubkey,final_packets, total_packets, total_outs, from_address, to_address
     print 'pubkey', pubkey, len(pubkey) 
     if len(pubkey) < 100:
       print "Compressed Key, using hexspace 21"
@@ -486,7 +486,7 @@ def build_transaction(miner_fee_satoshis, pubkey,final_packets, total_packets, t
       HEXSPACE_FIRST='41'
 
     #calculate fees
-    miner_fee = Decimal(miner_fee_satoshis) / Decimal(1e8)
+    miner_fee = Decimal(miner_fee_btc)
     if to_address==None or to_address==from_address:
  	    #change goes to sender/receiver
         print "Single extra fee calculation"  
@@ -542,7 +542,7 @@ def build_transaction(miner_fee_satoshis, pubkey,final_packets, total_packets, t
     change = total_amount - fee_total_satoshi
 
     #DEBUG 
-    print [ "Debugging...", dirty_txes,"miner fee sats: ", miner_fee_satoshis,"miner fee: ", miner_fee, "change: ",change,"total_amt: ", total_amount,"fee tot sat: ", fee_total_satoshi,"utxo ",  unspent_tx,"total pax ", total_packets, "total outs ",total_outs,"to ", to_address ]
+    print [ "Debugging...", dirty_txes,"miner fee sats: ", miner_fee_btc,"miner fee: ", miner_fee, "change: ",change,"total_amt: ", total_amount,"fee tot sat: ", fee_total_satoshi,"utxo ",  unspent_tx,"total pax ", total_packets, "total outs ",total_outs,"to ", to_address ]
 
     #source script is needed to sign on the client credit grazcoin
     hash160=bc_address_to_hash_160(from_address).encode('hex_codec')

@@ -1,5 +1,5 @@
 angular.module("omniControllers")
-	.controller("WalletSendController",["$scope", "MIN_MINER_FEE", "OMNI_PROTOCOL_COST", "SATOSHI_UNIT", "Transaction", "$filter", function WalletSendController($scope, MIN_MINER_FEE, PROTOCOL_FEE,SATOSHI_UNIT,Transaction,$filter){
+	.controller("WalletSendController",["$scope", "MIN_MINER_FEE", "OMNI_PROTOCOL_COST", "SATOSHI_UNIT", "Transaction", "$filter", "TransactionGenerator",function WalletSendController($scope, MIN_MINER_FEE, PROTOCOL_FEE,SATOSHI_UNIT,Transaction,$filter,TransactionGenerator){
 		$scope.minersFee = MIN_MINER_FEE;
 		$scope.protocolFee = PROTOCOL_FEE;
 
@@ -8,6 +8,10 @@ angular.module("omniControllers")
 
       	$scope.showtesteco = $scope.account.getSetting('showtesteco');
       	$scope.userCurrency = $scope.account.getSetting("usercurrency");
+
+      	TransactionGenerator.getEstimatedFee().then(function(result){
+      		$scope.minersFee = result.estimated_fee;
+      	})
 
       	$scope.setAsset = function(asset){
       		$scope.selectedAsset = asset;

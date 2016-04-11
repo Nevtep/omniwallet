@@ -16,12 +16,18 @@ conn = getRPCconn()
 app = Flask(__name__)
 app.debug = True
 
+confirm_target=6
 HEXSPACE_SECOND='21'
 mainnet_exodus_address='1EXoDusjGwvnjZUyKkxZ4UHEf77z6A5S4P'
 testnet_exodus_address='mpexoDuSkGGqvqrkrjiFng38QPkJQVFyqv'
 magicbyte=0
 testnet=False
 exodus_address=mainnet_exodus_address
+
+@app.route('/fee')
+def estimate_fee():
+    fee = estimateFee(confirm_target)['result']
+    return jsonify({ 'status': 200, 'estimatedfee': fee });
 
 @app.route('/<int:tx_type>', methods=['POST'])
 def generate_tx(tx_type):
@@ -71,7 +77,7 @@ def generate_tx(tx_type):
     except NameError, e:
       print e
       pubkey = request.form['pubkey']
-    fee = estimateFee(6)['result']
+    fee = estimateFee(confirm_target)['result']
     txdata = prepare_txdata(tx_type, request.form)
     if tx_type in [50,51,54]:
         try:

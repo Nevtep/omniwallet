@@ -29,7 +29,7 @@ angular.module('omniServices')
         } 
         var promise = $http.post(url, data);
         return promise;
-      },
+      };
 
       self.getArmoryUnsigned = function(unsignedHex,pubKey){
         var url = '/v1/armory/getunsigned';
@@ -39,7 +39,7 @@ angular.module('omniServices')
         };
         var promise = $http.post(url, data);
         return promise;
-      },
+      };
       
       self.getArmoryRaw = function(signedHex){
         var url = '/v1/armory/getrawtransaction';
@@ -48,5 +48,10 @@ angular.module('omniServices')
         };
         var promise = $http.post(url, data);
         return promise;
+      };
+
+      self.getEstimatedFee = function(){
+        var promise = $http.get('/v1/transaction/getunsigned/fee');
+        return promise; 
       }
     }]);

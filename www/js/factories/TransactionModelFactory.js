@@ -1,9 +1,9 @@
 angular.module("omniFactories")
 	.factory("Transaction",["TESTNET","SATOSHI_UNIT",function TransactionModelFactory(TESTNET,SATOSHI_UNIT){
-		var TransactionModel = function(txType,fromAddress,minerFee,txData){
+		var TransactionModel = function(txType,fromAddress,txData){
 			var self = this;
 
-			self.configure = function(type,address,fee,data){
+			self.configure = function(type,address,data){
 				self.type = type;
 
 				if(address.privkey){
@@ -22,14 +22,13 @@ angular.module("omniFactories")
 				self.data = data;
 
                 self.data['pubkey'] = self.pubKey;
-                self.data['fee']= fee.valueOf();
                 self.data['transaction_from'] = self.address.hash;
                 self.data['testnet'] = TESTNET || false;
 
-                self.totalCost = fee; // TODO: calculate protocol cost
+                self.totalCost = new Big(); // TODO: calculate protocol cost
 			}
 
-			self.configure(txType,fromAddress,minerFee,txData)
+			self.configure(txType,fromAddress,txData)
 		}
 
 		return TransactionModel;

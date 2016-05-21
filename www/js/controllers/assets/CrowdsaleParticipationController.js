@@ -22,11 +22,12 @@ angular.module("omniControllers")
 		$scope.confirmParticipation = function(){
 			var fee = new Big($scope.minerFees);
 			var amount = $scope.sendAmount;
-			var participation = new Transaction(0,$scope.selectedAddress,fee,{
+			var participation = new Transaction(0,$scope.selectedAddress,{
 		        transaction_version:0,
 		        currency_identifier:$scope.property.propertyiddesired,
 		        amount_to_transfer : amount,
 		        transaction_to: $scope.property.issuer,
+		        fee:fee,
 		        donate: $scope.account.getSetting("donate")
 		    });
 

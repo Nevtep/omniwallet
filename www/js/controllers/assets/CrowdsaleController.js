@@ -75,8 +75,7 @@ angular.module("omniControllers")
 		  // TRASANCTION GENERATION CONFIG 
 		  $scope.confirm = function(){
 		  	//TODO: VALIDATIONS
-		  	var fee = new Big($scope.issuerData.minerFees);
-			var crowdsaleCreation = new Transaction(51,$scope.issuerData.selectedAddress,fee,{
+			var crowdsaleCreation = new Transaction(51,$scope.issuerData.selectedAddress,{
 		          transaction_version:0,
 		          ecosystem:$scope.ecosystem,
 		          property_type : $scope.propertyDetails.propertyType, 
@@ -110,7 +109,6 @@ angular.module("omniControllers")
 				    deadline : (new Date(Date.UTC($scope.deadline.getFullYear(),$scope.deadline.getMonth(),$scope.deadline.getDate(), $scope.deadline.getHours(), $scope.deadline.getMinutes(), 0, 0))).toUTCString(),
 				    earlyBirdBonus : $scope.initialEarlyBirdBonus,
 				    percentageForIssuer : $scope.percentageForIssuer,
-				    fees : $scope.issuerData.minerFees,
 				    totalCost : crowdsaleCreation.totalCost,
 					confirmText:"ASSET.CROWDSALE.START",
 					explorerUrl:ADDRESS_EXPLORER_URL,

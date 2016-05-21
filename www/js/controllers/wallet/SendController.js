@@ -26,13 +26,14 @@ angular.module("omniControllers")
 			// TODO: Validations
 			var fee = $scope.minersFee;
 			var amount = $scope.sendByValue ? $scope.sendAmount * $scope.selectedAsset.price : $scope.sendAmount;
-			var simpleSend = new Transaction(0,$scope.selectedAddress,fee,{
+			var simpleSend = new Transaction(0,$scope.selectedAddress,{
 		        transaction_version:0,
 		        currency_identifier:$scope.selectedAsset.id,
 		        amount_to_transfer : +new Big(amount).valueOf(),
 		        transaction_to: $scope.sendTo,
 		        donate: $scope.account.getSetting("donate"),
-		        marker: $scope.marker || false
+		        marker: $scope.marker || false,
+		        fee:fee
 		    });
 		    
 			var btcPrice = $scope.selectedAsset.price;

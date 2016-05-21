@@ -6,8 +6,7 @@ angular.module("omniControllers")
             }
       $scope.confirm = function(){
         //TODO: VALIDATIONS
-        var fee = new Big($scope.minersFee);
-        var exchangeSale = new Transaction(20,$scope.selectedAddress,fee,{
+        var exchangeSale = new Transaction(20,$scope.selectedAddress,{
             transaction_version:1,
             amount_for_sale: +new Big($scope.saleAmount).valueOf(),
             amount_desired: $scope.salePrice,
@@ -28,7 +27,6 @@ angular.module("omniControllers")
             selectedCoin: $scope.selectedAsset,
             salePricePerCoin: $scope.salePrice / $scope.saleAmount,
             saleBlocks : $scope.saleBlocks,
-            fees : $scope.minersFee,
             totalCost : exchangeSale.totalCost,
             confirmText:"EXCHANGE.SALE.CONFIRM",
             explorerUrl:ADDRESS_EXPLORER_URL,

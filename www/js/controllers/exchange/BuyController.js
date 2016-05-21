@@ -39,8 +39,7 @@ angular.module("omniControllers")
 
       $scope.confirm = function(){
         //TODO: VALIDATIONS
-        var fee = new Big($scope.minersFee);
-        var exchangeAccept = new Transaction(22,$scope.selectedAddress,fee,{
+        var exchangeAccept = new Transaction(22,$scope.selectedAddress,{
             amount: +new Big($scope.buyAmount).valueOf(),
             tx_hash: $scope.buySaleID,
             donate: $scope.account.getSetting("donate")
@@ -53,10 +52,8 @@ angular.module("omniControllers")
             title:"EXCHANGE.BUY.MODALTITLE",
             displayedAbbreviation: $scope.displayedAbbreviation,
             buyAmount: $scope.buyAmount,
-            minerFees: $scope.minersFee,
             selectedCoin: $scope.selectedCoin,
             insufficientBitcoin : $scope.insufficientBitcoin,
-            fees : $scope.minersFee,
             totalCost : exchangeAccept.totalCost.valueOf(),
             selectedAddress : $scope.selectedAddress,
             sellerAddress: transaction.from_address,

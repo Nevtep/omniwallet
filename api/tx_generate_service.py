@@ -33,7 +33,7 @@ def generate_tx(tx_type):
     if tx_type not in supported_transactions:
         return jsonify({ 'status': 400, 'data': 'Unsupported transaction type '+str(tx_type) })
     
-    expected_fields=['transaction_version', 'transaction_from','pubkey','fee']
+    expected_fields=['transaction_version', 'transaction_from','pubkey']
 
     print "Form ",request.form
 

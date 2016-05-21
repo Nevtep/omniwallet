@@ -709,7 +709,7 @@ angular.module("omniServices")
                 templateUrl: '/views/modals/base.html',
                 controller: function($scope, $modalInstance, OMNI_PROTOCOL_COST){
                   $scope.PROTOCOL_COST = parseFloat(OMNI_PROTOCOL_COST.valueOf());
-                  $scope.minersFee = parseFloat($scope.parentScope.minersFee.valueOf())
+                  $scope.minersFee = parseFloat(0.0001);
                   $scope.close = function() {
                     $modalInstance.dismiss('close');
                   };

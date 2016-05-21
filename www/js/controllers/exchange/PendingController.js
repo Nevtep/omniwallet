@@ -146,8 +146,7 @@ angular.module("omniControllers")
 
 		  $scope.isCancel=true;
 		  $scope.confirmCancel = function(tx) {
-		  	var fee = new Big(0.0001);
-	        var exchangeCancel = new Transaction(20,$scope.wallet.getAddress(tx.from_address),fee,{
+	        var exchangeCancel = new Transaction(20,$scope.wallet.getAddress(tx.from_address),{
 	            transaction_version:1,
 	            amount_for_sale: 0,
 	            amount_desired: 0,
@@ -175,13 +174,14 @@ angular.module("omniControllers")
 			// TODO: Validations
 			var fee = $scope.minersFee;
 			var amount = $scope.sendAmount;
-			var acceptSend = new Transaction(0,$scope.selectedAddress,fee,{
+			var acceptSend = new Transaction(0,$scope.selectedAddress,{
 		        transaction_version:0,
 		        currency_identifier:$scope.selectedAsset.id,
 		        amount_to_transfer : $scope.selectedAsset.divisible ? +new Big(amount).times(SATOSHI_UNIT).valueOf() : +amount,
 		        transaction_to: $scope.sendTo,
 		        donate: $scope.account.getSetting("donate"),
-		        marker: true
+		        marker: true,
+		        fee:fee
 		    });
 		    
 			var btcPrice = $scope.selectedAsset.price;
@@ -193,7 +193,6 @@ angular.module("omniControllers")
 				symbol:$scope.selectedAsset.symbol,
 				sendValue:$scope.sendAmount * btcPrice,
 				toAddress:$scope.sendTo,
-				fees:acceptSend.totalCost,
 				confirmText:"WALLET.SEND.FUNDS",
             	successRedirect:"/wallet" 
 			};

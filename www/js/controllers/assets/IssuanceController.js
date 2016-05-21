@@ -40,8 +40,7 @@ angular.module("omniControllers")
 
 		  $scope.confirm =function(){
 			//TODO: VALIDATIONS
-		  	var fee = new Big($scope.issuerData.minerFees);
-			var assetCreation = new Transaction(50,$scope.issuerData.selectedAddress,fee,{
+			var assetCreation = new Transaction(50,$scope.issuerData.selectedAddress,{
 		          transaction_version:0,
 		          ecosystem:$scope.ecosystem,
 		          property_type : $scope.propertyDetails.propertyType, 

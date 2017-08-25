@@ -1,9 +1,11 @@
 angular.module("omniControllers")
-	.controller("DExOrderbookController", ["$scope","Account","Orderbook","PropertyManager","ModalManager", "Transaction", "MIN_MINER_FEE",
-		function DExOrderbookController($scope,Account,Orderbook,PropertyManager,ModalManager, Transaction, MIN_MINER_FEE){
-			$scope.isLoggedIn = Account.isLoggedIn;
+	.controller("DExOrderbookController", ["$scope","Account","Orderbook","PropertyManager","ModalManager", "Transaction", "MIN_MINER_FEE", "OMNI_PROTOCOL_COST",
+		function DExOrderbookController($scope,Account,Orderbook,PropertyManager,ModalManager, Transaction, MIN_MINER_FEE, PROTOCOL_FEE){
+			$scope.isLoggedIn = Account.loggedIn;
 			$scope.orderbook = {};
 			$scope.noOrders = true;
+			$scope.protocolFee = PROTOCOL_FEE;
+			$scope.omniAnnounce = true;
 
 			$scope.loadOrderbook = function(propertyIdDesired, propertyIdSelling){
 				if($scope.orderbook.updateBidsTimeout){
@@ -17,8 +19,33 @@ angular.module("omniControllers")
 					PropertyManager.getProperty(propertyIdSelling).then(function(result){
 						$scope.propertySelling = result.data;
 						$scope.orderbook = new Orderbook({desired:$scope.propertyDesired,selling:$scope.propertySelling});
+						if (Account.loggedIn) {
+							$scope.orderbook.setBuyAddress($scope.orderbook.buyAddresses[0]);
+							$scope.orderbook.setSellAddress($scope.orderbook.sellAddresses[0]);
+						}
 					});
 				});
+			}
+
+			$scope.editTransactionCost = function(side){
+				if (side == 'buy') {
+					$scope.minersFee=$scope.orderbook.buyOrder.fee;
+					$scope.feeType=$scope.orderbook.buyOrder.feeType;
+					$scope.feeData=$scope.orderbook.buyOrder.feeData;
+				} else {
+					$scope.minersFee=$scope.orderbook.sellOrder.fee;
+					$scope.feeType=$scope.orderbook.sellOrder.feeType;
+					$scope.feeData=$scope.orderbook.sellOrder.feeData;
+                                }
+				$scope.modalManager.openTransactionCostModal($scope, function(){
+					if (side == 'buy') {
+						$scope.orderbook.buyOrder.fee=$scope.minersFee;
+						$scope.orderbook.buyOrder.feeType=$scope.feeType;
+					} else {
+						$scope.orderbook.sellOrder.fee=$scope.minersFee;
+						$scope.orderbook.sellOrder.feeType=$scope.feeType;
+	                                }
+                                });
 			}
 
 			$scope.confirmCancel = function(offer){
@@ -28,19 +55,22 @@ angular.module("omniControllers")
 						propertyidforsale:offer.propertyselling.propertyid,
 						amountforsale: offer.selling_amount.valueOf(),
 						propertiddesired:offer.propertydesired.propertyid,
-						amountdesired: offer.desired_amount.valueOf()
+						amountdesired: offer.total_desired_amount.valueOf()
 					});
 				ModalManager.openConfirmationModal({
 					dataTemplate: '/views/modals/partials/dex_offer.html',
 					scope: {
-						title:"Cancel DEx Offer",
+						title:"Cancel OmniDex Offer",
 						address:offer.ownerAddress,
 						saleCurrency:offer.propertyselling.propertyid,
+						saleName:offer.propertyselling.name,
 						saleAmount:offer.selling_amount.valueOf(),
 						desiredCurrency:offer.propertydesired.propertyid,
-						desiredAmount:offer.desired_amount.valueOf(),
+						desiredName:offer.propertydesired.name,
+						desiredAmount:offer.total_desired_amount.valueOf(),
 						totalCost:dexOffer.totalCost,
 						confirmText: "Cancel Offer",
+						invert: false,
 						successMessage: "Your order was cancelled successfully"
 					},
 					transaction:dexOffer
@@ -56,7 +86,7 @@ angular.module("omniControllers")
 				ModalManager.openConfirmationModal({
 					dataTemplate: '/views/modals/partials/dex_cancel.html',
 					scope: {
-						title:"Cancel DEx Offers By Pair",
+						title:"Cancel OmniDex Offers By Pair",
 						address:address,
 						saleCurrency:$scope.orderbook.tradingPair.selling.propertyid,
 						desiredCurrency:$scope.orderbook.tradingPair.desired.propertyid,

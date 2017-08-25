@@ -34,6 +34,22 @@ angular.module("omniServices")
 	      return {hash:address,privkey:encryptedPrivateKey}
 	    };
 
+            self.estimateFee = function(address,btcAmount=null) {
+              var url = '/v1/transaction/estimatefee/'+address;
+              if (btcAmount==undefined) {
+                return $http.get(url).then(function(response) {
+                  return response;
+                });
+              } else {
+		var postData = {
+		  amountBTC: btcAmount
+		};
+                return $http.post(url, postData).then(function(response) {
+                  return response;
+                });
+              }
+            };
+
 	    self.getTransactions = function(address) {
 	    	var url = '/v1/transaction/address';
 			var data = {
@@ -44,5 +60,5 @@ angular.module("omniServices")
 			return $http.post(url, data).then(function(response) {
 				return response;
 			});
-	    }
+	    };
 	}]);

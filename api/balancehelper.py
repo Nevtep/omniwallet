@@ -33,8 +33,6 @@ def get_balancedata(address):
                      order by f1.propertyid""",(addr,addr))
 
     balance_data = { 'balance': [] }
-    #out, err = run_command(TIMEOUT+ 'sx balance -j ' + addr )
-    #out, err = run_command(TIMEOUT+"curl -s http://btc.blockr.io/api/v1/address/balance/"+addr)
     ret = bc_getbalance(addr)
     out = ret['bal']
     err = ret['error']
@@ -47,9 +45,11 @@ def get_balancedata(address):
         res['pendingpos'] = str(long(balrow[3]))
         res['pendingneg'] = str(long(balrow[4]))
         if cID == '0':
-          #get btc balance from sx
+          #get btc balance from bc api's
           if err != None or out == '':
-            btc_balance[ 'value' ] = str(long(-555))
+            #btc_balance[ 'value' ] = str(long(-555))
+            btc_balance[ 'value' ] = str(long(0))
+            btc_balance[ 'error' ] = True
           else:
             try:
               if balrow[4] < 0:
@@ -61,7 +61,9 @@ def get_balancedata(address):
                 #res['value'] = str(long( json.loads( out )['data']['balance']*1e8))
                 res['value'] = str(long( out ))
             except ValueError:
-              btc_balance[ 'value' ] = str(long(-555))
+              #btc_balance[ 'value' ] = str(long(-555))
+              btc_balance[ 'value' ] = str(long(0))
+              btc_balance[ 'error' ] = True
         else:
           #get regular balance from db
           if balrow[4] < 0:
@@ -80,16 +82,20 @@ def get_balancedata(address):
         addbtc=False
 
     if addbtc:
-      btc_balance = { 'symbol': 'BTC', 'divisible': True, 'id' : 0 }
+      btc_balance = { 'symbol': 'BTC', 'divisible': True, 'id' : 0, 'error' : False }
       if err != None or out == '':
-        btc_balance[ 'value' ] = str(long(-555))
+        #btc_balance[ 'value' ] = str(long(-555))
+        btc_balance[ 'value' ] = str(long(0))
+        btc_balance[ 'error' ] = True
       else:
         try:
           #btc_balance[ 'value' ] = str(long( json.loads( out )[0][ 'paid' ]))
           #btc_balance[ 'value' ] = str(long( json.loads( out )['data']['balance']*1e8 ))
           btc_balance[ 'value' ] = str(long( out ))
         except ValueError:
-          btc_balance[ 'value' ] = str(long(-555))
+          #btc_balance[ 'value' ] = str(long(-555))
+          btc_balance[ 'value' ] = str(long(0))
+          btc_balance[ 'error' ] = True
       btc_balance['pendingpos'] = str(long(0))
       btc_balance['pendingneg'] = str(long(0))
       balance_data['balance'].append(btc_balance)
@@ -99,15 +105,7 @@ def get_balancedata(address):
 
 
 def get_bulkbalancedata(addresses):
-    list=""
-    for a in addresses:
-      if list == "":
-        list = a
-      else:
-        list += ","+a
-
-    baldata=bc_getbulkbalance(list)
-    btclist = baldata['bal']
+    btclist=bc_getbulkbalance(addresses)
 
     retval = {}
 
@@ -142,12 +140,14 @@ def get_bulkbalancedata(addresses):
                      order by f1.propertyid""",(addr,addr))
 
       balance_data = { 'balance': [] }
-      #out, err = run_command(TIMEOUT+ 'sx balance -j ' + addr )
-      #out, err = run_command(TIMEOUT+"curl -s http://btc.blockr.io/api/v1/address/balance/"+addr)
-      if address in btclist:
-        out = btclist[address]
-        err = None
-      else:
+      try:
+        if address in btclist:
+          out = btclist[address]
+          err = None
+        else:
+          out = ''
+          err = "Missing"
+      except TypeError:
         out = ''
         err = "Missing"
 
@@ -160,9 +160,11 @@ def get_bulkbalancedata(addresses):
         res['pendingpos'] = str(long(balrow[3]))
         res['pendingneg'] = str(long(balrow[4]))
         if cID == '0':
-          #get btc balance from sx
+          #get btc balance from bc api's
           if err != None or out == '':
-            btc_balance[ 'value' ] = str(long(-555))
+            #btc_balance[ 'value' ] = str(long(-555))
+            btc_balance[ 'value' ] = str(long(0))
+            btc_balance[ 'error' ] = True
           else:
             try:
               if balrow[4] < 0:
@@ -172,7 +174,9 @@ def get_bulkbalancedata(addresses):
                 #res['value'] = str(long( json.loads( out )[0][ 'paid' ]))
                 res['value'] = str(long( out ))
             except ValueError:
-              btc_balance[ 'value' ] = str(long(-555))
+              #btc_balance[ 'value' ] = str(long(-555))
+              btc_balance[ 'value' ] = str(long(0))
+              btc_balance[ 'error' ] = True
         else:
           #get regular balance from db
           if balrow[4] < 0:
@@ -191,15 +195,19 @@ def get_bulkbalancedata(addresses):
           addbtc=False
 
       if addbtc:
-        btc_balance = { 'symbol': 'BTC', 'divisible': True, 'id' : 0 }
+        btc_balance = { 'symbol': 'BTC', 'divisible': True, 'id' : 0 ,'error' : False}
         if err != None or out == '':
-          btc_balance[ 'value' ] = str(long(-555))
+          #btc_balance[ 'value' ] = str(long(-555))
+          btc_balance[ 'value' ] = str(long(0))
+          btc_balance[ 'error' ] = True
         else:
           try:
             #btc_balance[ 'value' ] = str(long( json.loads( out )[0][ 'paid' ]))
             btc_balance[ 'value' ] = str(long(  out ))
           except ValueError:
-            btc_balance[ 'value' ] = str(long(-555))
+            #btc_balance[ 'value' ] = str(long(-555))
+            btc_balance[ 'value' ] = str(long(0))
+            btc_balance[ 'error' ] = True
         btc_balance['pendingpos'] = str(long(0))
         btc_balance['pendingneg'] = str(long(0))
         balance_data['balance'].append(btc_balance)

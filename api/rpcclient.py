@@ -39,7 +39,7 @@ class RPCHost():
         hadConnectionFailures = False
         while True:
             try:
-                response = self._session.get(self._url, headers=self._headers, data=payload, verify=False)
+                response = self._session.post(self._url, headers=self._headers, data=payload, verify=False)
             except requests.exceptions.ConnectionError:
                 tries -= 1
                 if tries == 0:
@@ -95,11 +95,13 @@ def decoderawtransaction(rawtx):
 def omni_decodetransaction(rawtx):
     return host.call("omni_decodetransaction", rawtx)
 
-
 def estimateFee(blocks=4):
     return host.call("estimatefee", blocks)
 
-## Mastercoin Specific RPC calls
+def gettxout(txid,vout,unconfirmed=True):
+    return host.call("gettxout",txid,vout,unconfirmed)
+
+## Omni Specific RPC calls
 def getbalance_MP(addr, propertyid):
     return host.call("getbalance_MP", addr, propertyid)
 
@@ -135,6 +137,15 @@ def getdivisible_MP(propertyid):
 
 def getgrants_MP(propertyid):
     return host.call("getgrants_MP", propertyid)
+
+def gettradessince_MP():
+    return host.call("gettradessince_MP")
+
+def gettrade(txhash):
+    return host.call("omni_gettrade", txhash)
+
+def getsto_MP(txid):
+    return host.call("getsto_MP", txid , "*")
 
 def getsimplesendPayload(propertyid, amount):
     return host.call("omni_createpayload_simplesend", int(propertyid), amount)

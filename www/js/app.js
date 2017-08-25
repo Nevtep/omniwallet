@@ -17,7 +17,7 @@ angular.module("omniConfig")
     if(TESTNET)
       return "http://tbtc.blockr.io/address/info/";
     else
-      return "http://omnichest.info/lookupadd.aspx?address=";
+      return "https://omniexplorer.info/lookupadd.aspx?address=";
   }])
   .factory("EXODUS_ADDRESS",["TESTNET", function AddressExplorerUrlFactory(TESTNET){
     if(TESTNET)
@@ -44,6 +44,7 @@ var app = angular.module('omniwallet', [
   'reCAPTCHA',
   'pascalprecht.translate',
   'nvd3',
+  'ja.qr',
   'omniConfig',
   'omniFilters',
   'omniDirectives',
@@ -240,7 +241,7 @@ app.config(function($idleProvider, $keepaliveProvider, reCAPTCHAProvider, idleDu
 })
 .run(function(Account, $location, TESTNET, BalanceSocket) {
   //Whitelist pages
-  whitelisted = ['login', 'about', 'status', 'explorer', 'details'];
+  whitelisted = ['login', 'about', 'status', 'explorer', 'details', 'dex'];
 
   if (!Account.loggedIn) {
     for (var i = 0; i < whitelisted.length; i++) {

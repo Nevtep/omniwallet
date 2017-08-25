@@ -4,9 +4,11 @@ angular.module("omniConfig")
    		"ACTIONS":"Actions",
 		"ADDRESS":"Address",
 		"AVAILABLE":"available",
+		"SENDABLE":"sendable",
 		"BALANCE":"Balance",
 		"BITCOIN":"Bitcoin",
    		"BROADCAST":"Broadcast Transaction",
+		"SIGNMSG":"Sign Message",
    		"OVERVIEW":"Overview",
    		"REMOVEADDRESS":"Remove from Wallet",
 		"ADDRESSES":"Addresses",
@@ -27,10 +29,64 @@ angular.module("omniConfig")
 		"CANCEL":"Cancel",
 		"CLOSE":"Close",
 		"NEXT":"Next",
+		"DONE":"Done",
 		"ACTIVECROWDSALES":"Active Crowdsales",
 		"HISTORY":"History",
 		"FEES":"Miner Fees (BTC)",
-		"PASSWORD":"Password"
+		"PASSWORD":"Password",
+		"DEFAULT":"Default",
+		"SUCCESS":"Success",
+		"ERROR":"Error",
+		"MFA":"MFA Code",
+		"RESET":"Reset",
+		"MY":"My",
+		"PUBKEY":"Pubkey"
+	},
+	"SETTINGS":{
+		"TITLE":"Account Settings",
+		"ID":"Wallet ID:",
+		"PASSWORD":"Wallet Password:",
+		"PASSWORDCHANGE":"Click Here To Change Your Wallet Password",
+		"MFATOOLTIP":"Add/Remove a compatible MFA device (Google Authenticator, Authy, ...) to protect your account logins",
+		"MFA":"MFA:",
+		"MFAE":"Click Here to Disable your Multifactor Authentication (MFA) Device",
+		"MFAD":"Click Here to Setup/Enable a MultiFactor Authentication (MFA) Device",
+		"EMAILTOOLTIP":"Your email can be used to recover your Wallet ID if you lose/misplace it and eventually for notifications concerning wallet activity.",
+		"EMAIL":"Wallet Email:",
+		"EMAILALERT":"Please enter a valid email",
+		"CURRENCYTOOLTIP":"Choose the preffered currency you wish all balance information in your wallet to be diplayed in.",
+		"CURRENCY":"Wallet Currency:",
+		"TESTECOTOOLTIP":"There are two types of ecosystems in the Masterprotocol, Production and Test. Enabling this option will display both in your wallet. Note: Disabling this option will not prevent you from receiving test ecosystem tokens. It will only filter it from your wallet display.",
+		"TESTECO":"Display Test Ecosystem:",
+		"FILTERDEXTOOLTIP":"Some DEx offers can no longer be completed because the cost to purchase the remaining tokens is less than the minimium amount allowed by the Bitcoin network. This option filters them out of the display list.",
+		"FILTERDEX":"Filter DEx dust level offers:",
+		"SAVE":"Save Preferences",
+		"SAVEDTRUE":"Your Wallet has been updated.",
+		"SAVEDFALSE1":"We seem to have encountered a problem updating your Wallet.",
+		"SAVEDFALSE2":"Please logout, close your browse, wait a minute then log back in and try again.",
+		"MFAEMAIL":"You Currently have an Active MFA Device. For security purposes you can not remove your email at this time.",
+		"MFAEMAILREQ":"For security and recovery purposes you can not setup an MFA device until you add a valid email to your account.",
+		"SHOWHIDEASQ":"Show/Hide Security Question"
+	},
+	"MFA":{
+		"TITLE1":"MFA Setup",
+		"TITLE2":"Disable MFA",
+		"ERROR":"Sorry, the code you entered is incorrect. Please double check and try again.",
+		"SUBMIT":"One moment while we verify and process your request, this should take less than a minute.",
+		"GENERROR1":"There was a problem generating a new secret. Please wait a moment and try again.",
+		"GENERROR2":"If this error continues to happen please notify the Omni team.",
+		"IMPORT":"To setup your account to require an MFA device scan the QR code below or manually enter the secret listed below into your MFA Device/Software (Google Authenticator, Authy, etc..)",
+		"SEC1":"Your Token Secret is",
+		"SEC2":"Store this safely and securely because",
+		"SEC3":"Anyone with this secret will be able to duplicate your MFA authorization codes.",
+		"SEC4":"Enter the current code being displayed on your MFA device to validate and complete the setup.",
+		"DIS1":"You currently have an MFA Device setup on your account.",
+		"DIS2":"Type DISABLE and then enter your current MFA code to deactivate.",
+		"ASQ":"Personal Security Question:",
+		"ASQTOOLTIP":"In the event you lose your MFA device Omniwallet's support team can use this Security Question/Answer to help verify you are the wallet owner and assist in removing the MFA requirements",
+		"ASQPLACEHOLDER":"Setup your Personal Security Question in the MFA Setup",
+		"ASA":"Personal Security Question Answer:",
+		"ASATOOLTIP":"Enter an answer for your security question."
 	},
 	"HOMEPAGE":{
 		"ADDRESSEXAMPLE":"(e.g. 1EXoDusjGwvnjZUyKkxZ4UHEf77z6A5S4P)",
@@ -42,40 +98,39 @@ angular.module("omniConfig")
 	"ABOUT":{
 		"CONTACT":{
 			"WE":"We are a group of developers constantly working to improve Omniwallet.",  
-            "QUESTIONS":"If you have any questions, issues or just want to provide some general feedback feel free to reach out to us at:",
-            "GITHUBTITLE":"Github",
-            "GITHUBDESC":"Search/see our 'Open Issues' and what we are 'Actively Working' on now. Don't see your specific topic? We encourage you to open a new issue to let us know. (Please include as many details as possible including ",
-            "GITHUBLINK":"the output of the developer console",
-            "TALKTITLE":"Knowledge Base/Support Center",
-            "TALKDESC":"This is a support knowledge base where you can review common topics, post questions asking for help or help answer other users questions",
-            "EMAILTITLE":"Email",
-            "EMAILDESC":"You can also reach us directly at",
-            "EMAILLINK":"the output of the developer console",
-            "CHATTITLE":"Live Chat",
-            "CHATDESC":"Chat with the developers, share your ideas or ask questions. Availability varies, but we should generally be around Mon-Fri 9-5 CDT",
-            "TITLE":"Contact Us"
+			"QUESTIONS":"If you have any questions, issues or just want to provide some general feedback feel free to reach out to us at:",
+			"GITHUBTITLE":"Github",
+			"GITHUBDESC":"Search/see our 'Open Issues' and what we are 'Actively Working' on now. Don't see your specific topic? We encourage you to open a new issue to let us know. (Please include as many details as possible including ",
+			"GITHUBLINK":"the output of the developer console",
+			"TALKTITLE":"Knowledge Base/Support Center",
+			"TALKDESC":"This is a support knowledge base where you can review common topics, questions and answers.",
+			"EMAILTITLE":"Email",
+			"EMAILDESC":"You can also reach us directly at",
+			"EMAILLINK":"the output of the developer console",
+			"CHATTITLE":"Live Chat",
+			"CHATDESC":"Chat with the developers, share your ideas or ask questions. Availability varies, but we should generally be around Mon-Fri 9-5 CDT",
+			"TITLE":"Contact Us"
 		},
 		"OMNI":{
-            "TITLE":"About Omni",
-            "FOUNDATION":{
-                "TITLE":"Omni Foundation",
-                "FIRST":"In September 2013, the Mastercoin Foundation was formed to temporarily manage the funds in the Exodus Address and the distribution of the development MSC. The board of the Mastercoin Foundation has declared its intention to minimize its temporary central role by transitioning the decision making to Mastercoin owners through proof of stake voting.",
-                "SECOND": "In January 2016 the Mastercoin Foundation was rebranded to the Omni Foundation and the primary tokens of the project, MSC, where renamed to OMNI. The Foundation advocates for the use of the Omni Protocol and tries to build a community of people who develop it. All budget items, board minutes, Dev OMNI vesting schedule, and bounties are public record and available to anyone on the ",
-                "LINK": "Foundation's Website"
-            },
-            "PROTOCOL":{
-                "TITLE":"Omni Protocol",
-                "PARAGRAPH":"The Omni Protocol is a communications protocol that uses the Bitcoin block chain to enable features such as smart contracts, user currencies and decentralized peer-to-peer exchanges. A common analogy that is used to describe the relation of the Omni Protocol to Bitcoin is that of HTTP to TCP/IP: HTTP, like the Omni Protocol, is the application layer to the more fundamental transport and internet layer of TCP/IP, like Bitcoin. For more in-depth information and details see the ",
-                "LINK":"Spec",
-                "ONGITHUB":"on github."
-
-            },
-            "TOKEN":{
-                "TITLE":"Omnis",
-                "FIRST" : "Omnis (symbol OMNI) are digital tokens that are necessary for the use of some features of the Omni Protocol. The total number of Omnis in existence is 619,478.6 and no more MSC will ever be created. Additionally, Omnis can not be mined into existence. The 619,478.6 OMNI were generated as a result of a public fundraiser in the style of Kickstarter.com.",
-            },
-            "INFO":"Information from the ",
-            "EDUCATION":"Master Protocol Education"
+			"TITLE":"About Omni",
+			"FOUNDATION":{
+				"TITLE":"Omni Foundation",
+				"FIRST":"In September 2013, the Mastercoin Foundation was formed to temporarily manage the funds in the Exodus Address and the distribution of the development MSC. The board of the Mastercoin Foundation has declared its intention to minimize its temporary central role by transitioning the decision making to Mastercoin owners through proof of stake voting.",
+				"SECOND": "In January 2016 the Mastercoin Foundation was rebranded to the Omni Foundation and the primary tokens of the project, MSC, where renamed to OMNI. The Foundation advocates for the use of the Omni Protocol and tries to build a community of people who develop it. All budget items, board minutes, Dev OMNI vesting schedule, and bounties are public record and available to anyone on the ",
+				"LINK": "Foundation's Website"
+			},
+			"PROTOCOL":{
+				"TITLE":"Omni Protocol",
+				"PARAGRAPH":"The Omni Protocol is a communications protocol that uses the Bitcoin block chain to enable features such as smart contracts, user currencies and decentralized peer-to-peer exchanges. A common analogy that is used to describe the relation of the Omni Protocol to Bitcoin is that of HTTP to TCP/IP: HTTP, like the Omni Protocol, is the application layer to the more fundamental transport and internet layer of TCP/IP, like Bitcoin. For more in-depth information and details see the ",
+				"LINK":"Spec",
+				"ONGITHUB":"on github."
+			},
+			"TOKEN":{
+				"TITLE":"Omnis",
+				"FIRST" : "Omnis (symbol OMNI) are digital tokens that are necessary for the use of some features of the Omni Protocol. The total number of Omnis in existence is 619,478.6 and no more OMNI will ever be created. Additionally, Omnis can not be mined into existence. The 619,478.6 OMNI were generated as a result of a public fundraiser in the style of Kickstarter.com."
+			},
+			"INFO":"Information from the ",
+			"EDUCATION":"Omni Protocol Education"
 		},
 		"OMNIWALLET":{
 			"TITLE" : "About Omniwallet",
@@ -101,7 +156,7 @@ angular.module("omniConfig")
 			},
 			"STATUS" :{
 				"TITLE" : "Current Status",
-				"SPEED" : "Omniwallet is in full-speed development. Our vision and goal are well defined, and we are working hard to develop the functionality and continually improve the features",
+				"SPEED" : "Omniwallet is in development. Our vision and goal are well defined, and we are working hard to develop the functionality and continually improve the features.",
 				"INVOLVEMENT" : "We would like to get your involvement in the development effort! So go ahead and:",
 				"SUGGESTIONS" : "Play around with it and give us suggestions",
 				"BUGS" : "Report bugs on github",
@@ -134,9 +189,10 @@ angular.module("omniConfig")
 		"FAQ":"FAQ",
 		"LOGIN":"Login",
 		"LOGOUT":"Logout",
-		"OFFERS":"My Offers",
+		"OFFERS":"Offers",
 		"SETTINGS":"Account Settings",
 		"TRADE":"Trade",
+		"DEX1":"BTC/OMNI",
 		"TRANSACTIONS":"Transactions",
 		"WALLET":"My Wallet",
 		"OMNIDEX":"OmniDex"
@@ -166,7 +222,10 @@ angular.module("omniConfig")
 		},
 		"LOGIN":{
 			"ID":"Wallet ID",
-			"INVALID":"Please enter a valid wallet id and password"
+			"INVALID1":"Sorry, we could not validate your credentials. Please check them and try again",
+			"INVALID2":"If you continue to have difficulties, check out our ",
+			"MFACODE":"I'm using Multi Factor Authentication",
+			"MFATOOLTIP":"Don't have an MFA device setup yet? Login and add one to your account under 'Account Settings'"
 		}, 
 		"CONFIRM":{
 			"OFFLINE":"Your transaction was generated successfully, now save the text above and sign it on your Armory offline computer. Come back with the signed text to broadcast it.",
@@ -184,11 +243,19 @@ angular.module("omniConfig")
 		},
 		"BROADCAST":{
 			"TITLE":"Broadcast Signed Transaction",
-			"INSTRUCTIONS":"Please copy the signed transaction on the textbox below to broadcastit",
+			"INSTRUCTIONS":"Please copy the signed transaction into the textbox below to broadcast it",
 			"ADDRESS":"Broadcasting Address",
 			"SIGNED":"Signed Armory Transaction",
 			"SUCCESS":"Transaction broadcasted successfully",
 			"FAIL":"Transaction failed to broadcast"
+		},
+		"SIGNMSG":{
+			"TITLE":"Sign Message",
+			"INSTRUCTIONS":"Enter your message below and click sign, to sign it with the signing address",
+			"ADDRESS":"Signing Address",
+			"SIGNED":"Signed Message",
+			"SUCCESS":"Message signed successfully",
+			"FAIL":"Could not sign message"
 		},
 		"IMPORT":{
 			"VALID":"Must be a valid Bitcoin address",
@@ -215,7 +282,7 @@ angular.module("omniConfig")
 				"ENTER":"Enter",
 				"KEY":"Private Key",
 				"ENABLE":"Enable Sending",
-				"KEYHOLDER":"enter your private key, formats: hex, b64, WIP, compressed WIP"
+				"KEYHOLDER":"enter your private key, formats: hex, b64, WIF, compressed WIF"
 			},
 			"WALLET":{
 				"TITLE":"Import a Wallet Backup",
@@ -249,7 +316,8 @@ angular.module("omniConfig")
 			
 			},
 			"WATCH":"Removing this WatchOnly address from your wallet only affects the displayed balances. All funds on this address will continue to remain on it and you can add it back at anytime if you wish to track them again.",
-			"CONFIRM":"Yes, Remove Address"
+			"CONFIRM":"Yes, Remove Address",
+			"LAST":"This is the last address in your wallet and can not be removed."
 		}
 	},
 	"TRANSACTION":{
@@ -355,8 +423,9 @@ angular.module("omniConfig")
 			"MODAL_FROM":"From",
 			"MODAL_TO":"To",
 			"CONFIRM":"Confirm Send",
-                        "AVAIL":"From address available",
-                        "LOWFEE":"Your 'From Address' does not have enough BTC to complete this transaction. Please select a different address or send enough BTC to cover the Total transaction cost."
+			"AVAIL":"From address available",
+			"LOWFEE":"Your 'From Address' does not have enough BTC to complete this transaction. Please send at least {{ topupAmount }} BTC to cover the estimated Total transaction cost.",
+			"UPDATE_FEE":"Re-estimate Transaction Cost"
 		},
 		"ASSETS":{
 			"ASSETS":"Assets",
@@ -374,7 +443,9 @@ angular.module("omniConfig")
 			"AMOUNT":"Amount",
 			"TXTIME":"Transaction time",
 			"TXDETAILS":"Transaction details",
-			"MOREDETAILS":"See transaction details"
+			"MOREDETAILS":"See transaction details",
+			"BTCNOTE1":"Note: At this time the history page only includes Omni Protocol transactions.",
+			"BTCNOTE2":"To see Bitcoin Transaction history we recommend a Bitcoin Explorer like: "
 		}
 	},
 	"ASSET":{
@@ -538,12 +609,13 @@ angular.module("omniConfig")
 		},
 		"OFFERS":{
 			"HASH":"Transaction hash",
-			"PRICE":"Price per Coin",
+			"PRICE":"Price per Token",
 			"AMOUNT":"Amount",
-			"TOTAL":"Total Cost",
+			"TOTAL":"Total",
 			"CANCEL":"Cancel",
 			"BUY":"Buy",
-			"SIDE": "Side"
+			"SIDE": "Side",
+			"STATUS": "Status"
 		}
 	},
 	"EXCHANGE":{
@@ -591,7 +663,7 @@ angular.module("omniConfig")
 		},
 		"BUY":{
 			"TITLE":"Accept Offer",
-			"NOFUNDS":"No Funds on Addresses with private keys to complete the purchase!",
+			"NOFUNDS":"No Funds on Addresses with private keys to complete the request!",
 			"SENDSOME":"Send some funding to an address on the",
 			"ORADD":"page or add an address with funds.",
 			"ADDRESS":"Buying Address",
@@ -638,14 +710,15 @@ angular.module("omniConfig")
 	"OMNIDEX" : {
 		"MARKETS" : {
 			"TITLE" : "Markets",
-			"NEW" : "Start New Market",
-			"SYMBOL" : "ID",
-			"NAME" : "Symbol",
-			"PRICE" : "Price",
+			"NEW" : "Start Market",
+			"SYMBOL" : "PropertyID",
+			"NAME" : "Property Name",
+			"PRICE" : "Current Price",
 			"VOLUME" : "24h Volume",
 			"SUPPLY" : "Total Supply",
 			"CAP" : "Market Cap",
-			"CHANGE" : "24h Change",
+			"CHANGE" : "Change Since Last Trade",
+			"LASTPRICE" : "Last Trade Price",
 			"NOMARKETS" : "There are currently no open markets",
 			"DENOMINATOR" : "Choose Denominating Currency"
 		},
@@ -654,13 +727,17 @@ angular.module("omniConfig")
 			"BUY" : "Buy",
 			"SELL": "Sell",
 			"BALANCE" : "Your balance",
-			"TOTALPRICE" : "Total",
-			"UNITPRICE" :"Price",
+			"TOTALCOST" : "My Total Cost",
+			"TOTALDESIRED" : "Total Desired",
+			"UNITPRICE" :"Price Per",
 			"AMOUNT" : "Amount",
 			"NOCOINS" : "You don't have any {{propertyName}} available",
 			"ACTIVEOFFERS" : "Your Offers",
 			"NOACTIVEOFFERS" : "You don't have any active offers",
-			"EMPTY" : "No offers"
+			"EMPTY" : "No offers",
+			"AMOUNTTOOLTIP" : "The Sum of the Amount {{ type }} for all orders at this price point",
+			"TOTALTOOLTIP" : "The Aggregate Sum of the Total Amount {{ type }} in all orders at this price or better",
+			"ID" : "Offer ID"
 		},
 		"SALE" : {
 			"TITLE" : "Open New Market",
@@ -668,6 +745,12 @@ angular.module("omniConfig")
 			"SELLINGAMOUNT" : "Amount to sell",
 			"CHOOSECOINDESIRED" : "Choose coin desired",
 			"DESIREDAMOUNT" : "Amount desired"
+		},
+		"ORDERS" : {
+			"TYPETT" : "Indicates which side of the Orderbook the Order applies to. Note: When switching the Market Currency, order information is automatically flipped and displayed on the inverted pair.",
+			"AMOUNTT" : "The Amount remaining in your order to be Bought (Buy Orders) or Sold (Sell Orders).",
+			"PRICETT" : "The effective unit price (EUP) is usually the original unit price. The EUP can go up (for asks) and down (for bids) in certain edge cases due to rounding of fractions to transferable units.",
+			"TOTALTT" : "The Total Amount left in your order to be Bought (Sell Orders) or Sold (Buy Orders)."
 		}
 	}
 })
